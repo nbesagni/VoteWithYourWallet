@@ -1,5 +1,5 @@
 ﻿body {
-    padding-top: 50px;
+    padding-top: 65px;
     padding-bottom: 20px;
 }
 
@@ -21,4 +21,21 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+
+/* Social Media buttons */
+.facebook {
+    background-color: #3b5998;
+    color: white;
+}
+
+.twitter {
+    background-color: #55acee;
+    color: white;
+}
+
+.google {
+    background-color: #dd4b39;
+    color: white;
 }
