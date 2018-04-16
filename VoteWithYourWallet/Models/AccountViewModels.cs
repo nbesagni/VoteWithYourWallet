@@ -70,6 +70,10 @@ namespace VoteWithYourWallet.Models
         public string Email { get; set; }
 
         [Required]
+        [Display(Name = "UserRoles")]
+        public string UserRoles { get; set; }
+
+        [Required]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
 

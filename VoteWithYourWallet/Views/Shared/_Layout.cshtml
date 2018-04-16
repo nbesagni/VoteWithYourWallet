@@ -31,43 +31,10 @@
             </form>
             @Html.Partial("_LoginPartial")
 
-        </div>
-        <!-- /.navbar-collapse -->
-    </nav>
 
 
-    <!-- Login Modal-->
-    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="loginModalLabel">Sign Up or Log In</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <nav>
-                        <div class="nav nav-tabs" id="signUpOrInTabs" role="tablist">
-                            <a class="nav-item nav-link active" href="#signUp" id="signUp-tab" data-toggle="tab" role="tab" aria-controls="signUp" aria-selected="true">Sign up</a>
-                            <a class="nav-item nav-link" href="#signIn" id="signIn-tab" data-toggle="tab" role="tab" aria-controls="signIn" aria-selected="false">Log in</a>
-                        </div>
-                    </nav>
-                    <div class="tab-content" id="logintabContent">
-                        <!-- Sign Up tab -->
-                        <div class="tab-pane fade show active" id="signUp" role="tabpanel" aria-labelledby="signUp-tab">
-                            @Html.Partial("~/Views/Account/_RegisterPartial.cshtml")
-                        </div>
-                        <!-- Sign In tab -->
-                        <div class="tab-pane fade show" id="signIn" role="tabpanel" aria-labelledby="signIn-tab">
-                            @Html.Partial("~/Views/Account/_LoginModalPartial.cshtml")
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /. Login Modal -->
+
+
 
 
     <div class="container-fluid body-content">
@@ -82,6 +49,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="~/Scripts/jquery.timeago.js"></script>
+    <script src="~/Scripts/Site.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>
