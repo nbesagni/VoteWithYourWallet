@@ -16,6 +16,7 @@ namespace VoteWithYourWallet.Models
         public string ShortDescription { get; set; }
         [Display(Name = "Long Description")]
         public string LongDescription { get; set; }
+        public string Target { get; set; }
         public string Image { get; set; }
 
         public virtual ICollection<Signature> Signatures { get; set; }

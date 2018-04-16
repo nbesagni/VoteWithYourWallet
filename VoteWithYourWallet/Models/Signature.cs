@@ -18,4 +18,8 @@ namespace VoteWithYourWallet.Models
         public virtual Cause Causes { get; set; }
         public virtual ApplicationUser ApplicationUser { get; set; }
     }
+
+
+    
+
 }

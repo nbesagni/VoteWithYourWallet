@@ -1,0 +1,69 @@
+﻿@model VoteWithYourWallet.Models.RegisterViewModel
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", @id = "signUpForm" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-row">
+        <div class="col">
+            @Html.LabelFor(m => m.FirstName, new { @class = "col-form-label control-label" })
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @id = "register-firstName", @placeholder = "First name", required = "required" })
+        </div>
+        <div class="col">
+            @Html.LabelFor(m => m.LastName, new { @class = "col-form-label control-label" })
+            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @id = "register-lastName", @placeholder = "Last name", required = "required" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email, new { @class = "col-form-label control-label" })
+        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @id = "register-email", @placeholder = "Enter email", required = "required" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Password, new { @class = "col-form-label control-label" })
+        @Html.PasswordFor(m => m.Password, new { @class = "form-control", @id = "register-password1", @placeholder = "Password", required = "required", @aria_describedby = "passwordHelpBlock" })
+        <small id="passwordHelpBlock" class="form-text text-muted">
+            Your password must be 6-20 characters long.
+        </small>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-form-label control-label" })
+        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @id = "register-password2", @placeholder = "Confirm password", required = "required", @aria_describedby = "passwordHelpBlock" })
+        <div class="invalid-feedback" id="passwordNoMatch">Your passwords do not match</div>
+        <div class="valid-feedback" id="passwordMatch">Your passwords match!</div>
+    </div>
+    <div class="modal-footer">
+        <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Close" />
+        <input type="submit" class="btn btn-success" id="registerButton" value="Register" />
+    </div>
+
+    @*@Html.ValidationSummary("", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btn btn-default" value="Register" />
+            </div>
+        </div>*@
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

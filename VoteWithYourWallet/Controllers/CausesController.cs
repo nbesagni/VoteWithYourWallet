@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -48,11 +49,25 @@ namespace VoteWithYourWallet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CauseID,ApplicationUserID,Title,ShortDescription,LongDescription,Image")] Cause cause)
+        public ActionResult Create(Cause cause, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
-                db.Causes.Add(cause);
+                // Image upload amend code by Ankur Mistry https://www.c-sharpcorner.com/article/upload-files-in-Asp-Net-mvc/
+                string path = Path.Combine(Server.MapPath("~/Content/Images"), Path.GetFileName(file.FileName));
+                file.SaveAs(path);
+                db.Causes.Add(new Cause
+                {
+
+                    CauseID = cause.CauseID,
+                    Title = cause.Title,
+                    ApplicationUserID = cause.ApplicationUserID,
+                    ShortDescription = cause.ShortDescription,
+                    LongDescription = cause.LongDescription,
+                    Target = cause.Target,
+                    Image = "~/Content/Images/" + file.FileName
+                });
+                //db.Causes.Add(cause);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -82,7 +97,7 @@ namespace VoteWithYourWallet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CauseID,ApplicationUserID,Title,ShortDescription,LongDescription,Image")] Cause cause)
+        public ActionResult Edit([Bind(Include = "CauseID,ApplicationUserID,Title,ShortDescription,LongDescription,Image,Target")] Cause cause)
         {
             if (ModelState.IsValid)
             {
@@ -128,5 +143,8 @@ namespace VoteWithYourWallet.Controllers
             }
             base.Dispose(disposing);
         }
+
+
     }
 }
+

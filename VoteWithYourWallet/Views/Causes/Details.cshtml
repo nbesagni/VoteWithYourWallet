@@ -1,7 +1,11 @@
 ﻿@model VoteWithYourWallet.Models.Cause
+@using Microsoft.AspNet.Identity;
 
 @{
     ViewBag.Title = "Cause Details";
+
+
+
 }
 
 <div class="row text-center">
@@ -12,7 +16,15 @@
     <div class="col-md-10 mx-auto">
         <div class="row">
             <div class="col-md-8">
-                <img class="img-fluid" src="~/Content/Images/causePhoto.jpg">
+                @if (Model.Image.Length < 1)
+                {
+                    <img class="img-fluid" src="images/causePhoto.jpg">
+                }
+                else
+                {
+                    <img class="img-fluid" src="@Url.Content(Model.Image)">
+                }
+
                 <p class="lead">@Html.DisplayFor(model => model.ShortDescription)</p>
                 <p>@Html.DisplayFor(model => model.LongDescription)</p>
                 <span id="socialMediaButtons">
@@ -29,7 +41,7 @@
                 <button type="button" class="btn btn-success btn-lg btn-block" id="signatureButton">Sign this cause</button>
                 <br>
                 <h5>Other who have signed..</h5>
-                <table class="table table-sm" id="signaturesList">
+                <table class="table table-sm" id="SignaturesList">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">Name</th>
@@ -37,17 +49,25 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row"><span class="oi oi-person"></span> David Smith</th>
-                            <td><small>5 minutes ago</small></td>
-                        </tr>
-                        <tr>
-                            <th scope="row"><span class="oi oi-person"></span> Nick Besagni</th>
-                            <td><small>1 hour ago</small></td>
-                        </tr>
-                        <tr>
-                            <th scope="row"><span class="oi oi-person"></span> Lindsay McPhee</th>
-                            <td><small>yesterday</small></td>
+                        @foreach (var item in Model.Signatures)
+    {
+                        
+                    <tr>
+                        <th scope="row"><span class="oi oi-person"></span> @Html.DisplayFor(modelItem => item.ApplicationUser.FirstName) @Html.DisplayFor(modelItem => item.ApplicationUser.LastName)</th>
+                        <td><small><span class="timeago">@Html.DisplayFor(modelItem => item.DateTimeSigned)</span></small></td>
+                    </tr>
+}
+                        @*<tr>
+            <th scope="row"><span class="oi oi-person"></span> David Smith</th>
+            <td><small>5 minutes ago</small></td>
+        </tr>
+        <tr>
+            <th scope="row"><span class="oi oi-person"></span> Nick Besagni</th>
+            <td><small>1 hour ago</small></td>
+        </tr>
+        <tr>
+            <th scope="row"><span class="oi oi-person"></span> Lindsay McPhee</th>
+            <td><small>yesterday</small></td>*@
                         </tr>
                     </tbody>
                 </table>

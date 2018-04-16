@@ -1,5 +1,5 @@
 ﻿@model VoteWithYourWallet.Models.Cause
-
+@using Microsoft.AspNet.Identity;
 @{
     ViewBag.Title = "Create";
 }
@@ -7,60 +7,54 @@
 <h2>Create</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Create", "Causes", FormMethod.Post,
+new { @id = "createCause", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Cause</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.ApplicationUserID, "ApplicationUserID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("ApplicationUserID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ApplicationUserID, "", new { @class = "text-danger" })
-            </div>
-        </div>
+    @Html.HiddenFor(model => model.ApplicationUserID, new { Value = User.Identity.GetUserId() })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+@*<div class="form-horizontal">*@
+    <h4>Cause</h4>
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="form-group">
+                <label for="Title" class="col-form-label">Name of your cause:</label>
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", @id = "causeName", @placeholder = "Enter the name of your cause..." } })
                 @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ShortDescription, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ShortDescription, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="form-group">
+                <label for="Title" class="col-form-label">Company or person your cause is targeted at:</label>
+                @Html.EditorFor(model => model.Target, new { htmlAttributes = new { @class = "form-control", @id = "causeTarget", @placeholder = "Enter the name of your cause..." } })
+                @Html.ValidationMessageFor(model => model.Target, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label for="ShortDescription" class="col-form-label">Brief summary of your cause:</label>
+                @Html.TextAreaFor(model => model.ShortDescription, new { @class = "form-control", @id = "causeSummary", @placeholder = "Please briefly summarise your cause..." })
                 @Html.ValidationMessageFor(model => model.ShortDescription, "", new { @class = "text-danger" })
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.LongDescription, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LongDescription, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="form-group">
+                <label for="LongDescription" class="col-form-label">Description of your cause:</label>
+                @Html.TextAreaFor(model => model.LongDescription, new { @class = "form-control", @id = "causeDescription", @placeholder = "Cause description...", @rows = "3" })
                 @Html.ValidationMessageFor(model => model.LongDescription, "", new { @class = "text-danger" })
             </div>
-        </div>
+            <div class="form-group">
+                <label for="LongDescription" class="col-form-label">Upload an image (optional):</label>
+                <input type="file" name="file" id="file" />
+            </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Image, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+                <div class="text-right">
+                    <a class="btn btn-secondary" id="causeCancelButton" href="index.html">Cancel</a>
+                    <input type="submit" class="btn btn-success" id="causeCreateButton" value="Create">
+                </div>
             </div>
         </div>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
+
+
+
+@*</div>*@
 }
 
 <div>
