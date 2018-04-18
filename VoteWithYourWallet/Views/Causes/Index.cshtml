@@ -1,57 +1,112 @@
 ﻿@model IEnumerable<VoteWithYourWallet.Models.Cause>
-
+@using Microsoft.AspNet.Identity.EntityFramework;
+@using Microsoft.AspNet.Identity;
+@using System.Web.Mvc;
+@using System.Linq;
+@using System.Net;
+@using System.Web;
+@using System.Web.Mvc;
+@using VoteWithYourWallet.Models;
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<div class="container">
+    <div class="row text-center">
+        <div class="col-md-6 mx-auto"><h1 class="display-4">Browse our causes</h1></div>
+    </div>
+    <hr>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ApplicationUser.FirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ShortDescription)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LongDescription)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Image)
-        </th>
-        <th></th>
-    </tr>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ApplicationUser.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ShortDescription)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LongDescription)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Image)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.CauseID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.CauseID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.CauseID })
-        </td>
-    </tr>
+
+
+    @{ var i = 1; }
+
+
+
+
+    @foreach (var item in Model)
+    {
+        if ((i + 2) % 3 == 0)
+        {
+            @:<div class="row card-group align-content-center">
 }
 
-</table>
+
+
+using (var db = new ApplicationDbContext())
+{
+    int SignatureCount = (from row in db.Signatures
+                          where row.CauseID == item.CauseID
+                          select row).Count();
+
+
+
+
+    <div class="card">
+        @if (item.Image.Length < 1)
+        {
+            <img class="card-img-top" src="images/causePhoto.jpg">
+        }
+        else
+        {
+            <img class="card-img-top" src="@Url.Content(item.Image)" alt="@Html.DisplayFor(modelItem => item.Title) image">
+        }
+
+        <div class="card-body">
+        </div>
+    
+    <div class="card-footer">
+        <h5 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h5>
+        <small class="text-muted">Created by <strong>@Html.DisplayFor(modelItem => item.ApplicationUser.FirstName) @Html.DisplayFor(modelItem => item.ApplicationUser.LastName)</strong></small>
+        <p class="card-text">
+            @Html.DisplayFor(modelItem => item.ShortDescription) ...@Html.ActionLink("View more", "Details", new { id = item.CauseID })
+        </p>
+        @Html.ActionLink("Delete", "Delete", new { id = item.CauseID })
+
+        <strong>@SignatureCount</strong> signatures
+    </div>
+</div>
+            }
+
+            if (i % 3 == 0)
+            {
+                @:</div> <br />
+        }
+        if ((Model.Count() % 3 != 0) && i - 1 == Model.Count())
+        {
+            @:</div> <br />
+    }
+    i++;
+
+    @*<tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApplicationUser.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShortDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LongDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Image)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.CauseID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.CauseID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.CauseID })
+            </td>
+        </tr>*@
+
+
+
+
+}
+    </div>

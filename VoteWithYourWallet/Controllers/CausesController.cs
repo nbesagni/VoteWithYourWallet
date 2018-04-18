@@ -53,9 +53,29 @@ namespace VoteWithYourWallet.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Image upload amend code by Ankur Mistry https://www.c-sharpcorner.com/article/upload-files-in-Asp-Net-mvc/
-                string path = Path.Combine(Server.MapPath("~/Content/Images"), Path.GetFileName(file.FileName));
-                file.SaveAs(path);
+                string path;
+                if (file != null) {
+                    //Generate random string code by User Mora, Source: https://stackoverflow.com/questions/17874086/generate-random-alphanumeric-string-into-password-field
+                    var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+                    var stringChars = new char[8];
+                    var random = new Random();
+
+                    for (int i = 0; i < stringChars.Length; i++)
+                    {
+                        stringChars[i] = chars[random.Next(chars.Length)];
+                    }
+
+                    var finalString = new String(stringChars);
+                    // Image upload amend code by Ankur Mistry https://www.c-sharpcorner.com/article/upload-files-in-Asp-Net-mvc/
+                    path = Path.Combine(Server.MapPath("~/Content/Images"), finalString + Path.GetExtension(file.FileName));
+
+                    file.SaveAs(path);
+                }
+                else
+                {
+                    path = "~/Content/Images/causePhoto.jpg";
+
+                }
                 db.Causes.Add(new Cause
                 {
 
@@ -65,7 +85,7 @@ namespace VoteWithYourWallet.Controllers
                     ShortDescription = cause.ShortDescription,
                     LongDescription = cause.LongDescription,
                     Target = cause.Target,
-                    Image = "~/Content/Images/" + file.FileName
+                    Image = path
                 });
                 //db.Causes.Add(cause);
                 db.SaveChanges();
@@ -133,6 +153,20 @@ namespace VoteWithYourWallet.Controllers
             db.Causes.Remove(cause);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+
+        static List<Signature> signatures = new List<Signature>();
+        public ActionResult GetSignatures()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SignCause(Signature s)
+        {
+            signatures.Add(s);
+            return Json(signatures.Count, JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)

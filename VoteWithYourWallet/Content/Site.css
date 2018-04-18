@@ -39,3 +39,9 @@ textarea {
     background-color: #dd4b39;
     color: white;
 }
+
+
+.card-img-top {
+    display: block;
+    width: 100%;
+}
