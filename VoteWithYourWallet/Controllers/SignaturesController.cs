@@ -61,6 +61,8 @@ namespace VoteWithYourWallet.Controllers
             return View(signature);
         }
 
+       
+
         // GET: Signatures/Edit/5
         public ActionResult Edit(int? id)
         {

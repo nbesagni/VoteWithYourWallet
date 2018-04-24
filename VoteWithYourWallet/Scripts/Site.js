@@ -112,13 +112,13 @@ $(document).ready(function () {
 });
 
 // Update signature count and add signature when cause is signed
-$("#signatureButton").click(function () {
-    var signatureCount2 = parseInt($('.signatureCount').text().replace(',', ''));
-    signatureCount2++;
-    signatureCount2 = numberWithCommas(signatureCount2);
-    $('.signatureCount').text(signatureCount2);
-    $("#signaturesList tbody").prepend($('<tr class="newSignatureRow"><th scope="row"><span class="oi oi-person"></span> You</th><td><small>Just now</small></td></tr>'));
-    $("#signatureButton").attr("disabled", "disabled");
-});
+//$("#signatureButton").click(function () {
+//    var signatureCount2 = parseInt($('.signatureCount').text().replace(',', ''));
+//    signatureCount2++;
+//    signatureCount2 = numberWithCommas(signatureCount2);
+//    $('.signatureCount').text(signatureCount2);
+//    $("#signaturesList tbody").prepend($('<tr class="newSignatureRow"><th scope="row"><span class="oi oi-person"></span> You</th><td><small>Just now</small></td></tr>'));
+//    $("#signatureButton").attr("disabled", "disabled");
+//});
 
 

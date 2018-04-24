@@ -576,6 +576,7 @@
     <Content Include="Views\Roles\Edit.cshtml" />
     <Content Include="Views\Roles\ManageUserRoles.cshtml" />
     <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
+    <Content Include="Views\Causes\_SignCause.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

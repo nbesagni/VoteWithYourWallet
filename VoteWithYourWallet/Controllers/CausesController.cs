@@ -155,6 +155,26 @@ namespace VoteWithYourWallet.Controllers
             return RedirectToAction("Index");
         }
 
+        // GET: Causes/_SignCause
+        public ActionResult _SignCause()
+        {
+            return PartialView();
+        }
+
+        // POST: Causes/_SignCause
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult _SignCause([Bind(Include = "SignatureID,CauseID,ApplicationUserID,DateTimeSigned,Message")] Signature signature)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Signatures.Add(signature);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return PartialView();
+        }
+
 
         static List<Signature> signatures = new List<Signature>();
         public ActionResult GetSignatures()
@@ -162,12 +182,12 @@ namespace VoteWithYourWallet.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult SignCause(Signature s)
-        {
-            signatures.Add(s);
-            return Json(signatures.Count, JsonRequestBehavior.AllowGet);
-        }
+        //[HttpPost]
+        //public ActionResult SignCause(Signature s)
+        //{
+        //    signatures.Add(s);
+        //    return Json(signatures.Count, JsonRequestBehavior.AllowGet);
+        //}
 
         protected override void Dispose(bool disposing)
         {

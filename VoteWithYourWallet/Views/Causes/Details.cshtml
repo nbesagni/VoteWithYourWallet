@@ -39,111 +39,90 @@
                 <hr>
             </div>
             <div class="col-md-4">
-                @using (Ajax.BeginForm("SignCause", new AjaxOptions()
-    {
-        InsertionMode = InsertionMode.Replace,
-        UpdateTargetId = "dane"
-    }))
-    {
-            @Html.AntiForgeryToken()
-            @Html.HiddenFor(model => model.ApplicationUserID, new { Value = User.Identity.GetUserId() })
-            using (var db = new ApplicationDbContext())
-{
-    int SignatureCount = (from row in db.Signatures
-                          where row.CauseID == Model.CauseID
-                          select row).Count();
-            <p class="text-muted">This cause has...</p>
-            <h1 class="display-4"><strong><span class="signatureCount">@SignatureCount</span> </strong><small class="text-muted">signatures</small></h1>
-            <button type="submit" class="btn btn-success btn-lg btn-block" id="signatureButton">Sign this cause</button>
-}
-}
+                @*@using (Ajax.BeginForm("SignCause", new AjaxOptions()
+                    {
+                        InsertionMode = InsertionMode.Replace,
+                        UpdateTargetId = "dane"
+                    }))
+                    {
+                            @Html.AntiForgeryToken()
+                            @Html.HiddenFor(model => model.ApplicationUserID, new { Value = User.Identity.GetUserId() })*@
+                @using (var db = new ApplicationDbContext())
+                {
+                    int SignatureCount = (from row in db.Signatures
+                                          where row.CauseID == Model.CauseID
+                                          select row).Count();
+                    <p class="text-muted">This cause has...</p>
+                    <h1 class="display-4"><strong><span class="signatureCount">@SignatureCount</span> </strong><small class="text-muted">signatures</small></h1>
+                    <button type="button" class="btn btn-success btn-lg btn-block" id="signatureButton" data-toggle="modal" data-target="#signatureModal">Sign this cause</button>
+
+                }
+                @*}*@
                 <br>
                 <h5>Other who have signed..</h5>
                 <table class="table table-sm" id="SignaturesList">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">
-                                Name </th>
-                                <th scope="col">When
+                                Name
+                            </th>
+                            <th scope="col">
+                                When
                             </th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model.Signatures)
-            {
+                        {
 
-                <tr>
-                    <th scope="row"><span class="oi oi-person"></span> @Html.DisplayFor(modelItem => item.ApplicationUser.FirstName) @Html.DisplayFor(modelItem => item.ApplicationUser.LastName)</th>
-                    <td><small><span class="timeago">@Html.DisplayFor(modelItem => item.DateTimeSigned)</span></small></td>
-                </tr>
-}
-                        @*<tr>
-                    <th scope="row"><span class="oi oi-person"></span> David Smith</th>
-                    <td><small>5 minutes ago</small></td>
-                </tr>
-                <tr>
-                    <th scope="row"><span class="oi oi-person"></span> Nick Besagni</th>
-                    <td><small>1 hour ago</small></td>
-                </tr>
-                <tr>
-                    <th scope="row"><span class="oi oi-person"></span> Lindsay McPhee</th>
-                    <td><small>yesterday</small></td>*@
-                        @*</tr>*@
+                            <tr>
+                                <th scope="row"><span class="oi oi-person"></span> @Html.DisplayFor(modelItem => item.ApplicationUser.FirstName) @Html.DisplayFor(modelItem => item.ApplicationUser.LastName)</th>
+                                <td><small><span class="timeago">@Html.DisplayFor(modelItem => item.DateTimeSigned)</span></small></td>
+                            </tr>
+                        }
+
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
-<div>
-    <h4>Cause</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ApplicationUser.FirstName)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ApplicationUser.FirstName)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ShortDescription)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ShortDescription)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LongDescription)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LongDescription)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Image)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Image)
-        </dd>
-
-    </dl>
-</div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.CauseID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
 
 
+<!-- Signature Modal-->
+<div class="modal fade" id="signatureModal" role="dialog" aria-labelledby="signatureModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="signatureModalLabel">Sign a Cause</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @if (Request.IsAuthenticated)
+                {
+            @Html.Partial("_SignCause", new ViewDataDictionary { { "CauseID", Model.CauseID } })
+                }
+                else
+                {
+                    <p>You must be logged in to sign up to a cause.
+                <br />
+                Please <a href="#" data-dismiss="modal"  data-toggle="modal" data-target="#loginModal" data-whatever="signIn" aria-controls="signIn">sign in</a> or 
+                <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#loginModal" data-whatever="signUp" aria-controls="signUp">register</a> an account with us.</p>
+                }
+            </div>
+            
+        </div>
+    </div>
+</div>
+<!-- /. Signature Modal -->

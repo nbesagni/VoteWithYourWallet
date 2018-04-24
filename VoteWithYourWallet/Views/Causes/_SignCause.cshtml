@@ -1,0 +1,38 @@
+﻿@model VoteWithYourWallet.Models.Signature
+@using Microsoft.AspNet.Identity;
+@using VoteWithYourWallet.Models;
+
+
+@{var db = new ApplicationDbContext();
+    int CauseIDtoSign = Convert.ToInt32(ViewData["CauseID"]);
+    string CauseTitle = (from Cause in db.Causes
+                         where Cause.CauseID == CauseIDtoSign
+                         select Cause.Title).FirstOrDefault();
+    string CauseTarget = (from Cause in db.Causes
+                          where Cause.CauseID == CauseIDtoSign
+                          select Cause.Target).FirstOrDefault();
+}
+
+@using (Html.BeginForm("_SignCause", "Causes", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "SignCauseForm" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.CauseID, new { Value = CauseIDtoSign })
+    @Html.HiddenFor(model => model.ApplicationUserID, new { Value = User.Identity.GetUserId() })
+    @Html.HiddenFor(model => model.DateTimeSigned, new { Value = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") })
+
+    <p class="lead">By selecting the 'sign' button, you agree to sign the cause <strong>"@CauseTitle"</strong> and to vote with your wallet by not doing business with or purchasing from <strong>@CauseTarget</strong>.</p>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Message, htmlAttributes: new { @class = "col-form-label" })
+            @Html.TextAreaFor(model => model.Message, new { @class = "form-control", @placeholder = "Leave a public message about your support... (optional)"} )
+            @Html.ValidationMessageFor(model => model.Message, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="modal-footer">
+         <input type="button" class="btn btn-secondary" value="Close" data-dismiss="modal" />
+            <input type="submit" value="Sign" class="btn btn-success" />
+    </div>
+
+}
