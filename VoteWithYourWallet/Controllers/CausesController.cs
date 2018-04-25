@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using VoteWithYourWallet.Models;
 
 namespace VoteWithYourWallet.Controllers
@@ -18,6 +19,7 @@ namespace VoteWithYourWallet.Controllers
         // GET: Causes
         public ActionResult Index()
         {
+            
             var causes = db.Causes.Include(c => c.ApplicationUser);
             return View(causes.ToList());
         }
@@ -34,6 +36,22 @@ namespace VoteWithYourWallet.Controllers
             {
                 return HttpNotFound();
             }
+
+
+            // Check if user has signed cause before
+            var userID = User.Identity.GetUserId();
+            if (db.Signatures.Where(u => u.ApplicationUserID == userID && u.CauseID == id).Any())
+            {
+                ViewBag.AlreadySigned = "True";
+            }
+            else
+            {
+                ViewBag.AlreadySigned = "False";
+            }
+
+
+
+
             return View(cause);
         }
 
