@@ -88,7 +88,7 @@ namespace VoteWithYourWallet.Controllers
 
         public ActionResult ManageUserRoles()
         {
-            // prepopulat roles for the view dropdown
+            // prepopulate roles for the view dropdown
             var list = db.Roles.OrderBy(r => r.Name).ToList().Select(rr =>
 
 new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();

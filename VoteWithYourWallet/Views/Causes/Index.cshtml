@@ -46,30 +46,50 @@ using (var db = new ApplicationDbContext())
 
 
 
-    <div class="card">
-        @if (item.Image.Length < 1)
-        {
-            <img class="card-img-top" src="images/causePhoto.jpg">
-        }
-        else
-        {
-            <img class="card-img-top" src="@Url.Content(item.Image)" alt="@Html.DisplayFor(modelItem => item.Title) image">
-        }
+                  <div class="card">
+                      @if (item.Image.Length < 1)
+    {
+                  <img class="card-img-top" src="images/causePhoto.jpg">
+}
+else
+{
+                  <img class="card-img-top" src="@Url.Content(item.Image)" alt="@Html.DisplayFor(modelItem => item.Title) image">
+}
 
-        <div class="card-body">
-        </div>
-    
-    <div class="card-footer">
-        <h5 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h5>
-        <small class="text-muted">Created by <strong>@Html.DisplayFor(modelItem => item.ApplicationUser.FirstName) @Html.DisplayFor(modelItem => item.ApplicationUser.LastName)</strong></small>
-        <p class="card-text">
-            @Html.DisplayFor(modelItem => item.ShortDescription) ...@Html.ActionLink("View more", "Details", new { id = item.CauseID })
-        </p>
-        @Html.ActionLink("Delete", "Delete", new { id = item.CauseID })
+                  <div class="card-body">
+                      <h5 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h5>
 
-        <strong>@SignatureCount</strong> signatures
-    </div>
-</div>
+                      <hr />
+                      <p class="card-text">
+                          @Html.DisplayFor(modelItem => item.ShortDescription)
+                      </p>
+                      <hr />
+                      <p class="text-right">
+                          <strong>@SignatureCount</strong> signatures so far...
+                      </p>
+                  </div>
+
+
+                              
+
+
+
+
+                          <div class="card-footer">
+                              <p class="text-right">
+                                  <a href="@Url.Action("Details", new { id = item.CauseID })" class="btn btn-success">
+                                      View details
+                                  </a>
+                                  @if (User.IsInRole("Admin"))
+            {
+                      <a href="@Url.Action("Delete", new { id = item.CauseID })" class="btn btn-danger">
+                          <i class="fas fa-trash-alt"></i>
+                      </a>
+}
+
+                              </p>
+                          </div>
+                      </div>
             }
 
             if (i % 3 == 0)

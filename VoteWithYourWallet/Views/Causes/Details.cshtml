@@ -20,16 +20,17 @@
         <div class="row">
             <div class="col-md-8">
                 @if (Model.Image.Length < 1)
-                {
-                    <img class="img-fluid" src="images/causePhoto.jpg">
-                }
-                else
-                {
-                    <img class="img-fluid" src="@Url.Content(Model.Image)">
-                }
+    {
+            <img class="img-fluid" src="images/causePhoto.jpg">
+}
+else
+{
+            <img class="img-fluid" src="@Url.Content(Model.Image)">
+}
 
                 <p class="lead">@Html.DisplayFor(model => model.ShortDescription)</p>
                 <p>@Html.DisplayFor(model => model.LongDescription)</p>
+                <small>Created by <strong>@Html.DisplayFor(modelItem => Model.ApplicationUser.FirstName) @Html.DisplayFor(modelItem => Model.ApplicationUser.LastName)</strong></small>
                 <span id="socialMediaButtons">
                     <!-- Social Media Buttons -->
                     <button class="btn facebook"><i class="fab fa-facebook fa-lg"></i> Share</button>
@@ -39,25 +40,22 @@
                 <hr>
             </div>
             <div class="col-md-4">
-                @*@using (Ajax.BeginForm("SignCause", new AjaxOptions()
-                    {
-                        InsertionMode = InsertionMode.Replace,
-                        UpdateTargetId = "dane"
-                    }))
-                    {
-                            @Html.AntiForgeryToken()
-                            @Html.HiddenFor(model => model.ApplicationUserID, new { Value = User.Identity.GetUserId() })*@
-                @using (var db = new ApplicationDbContext())
-                {
-                    int SignatureCount = (from row in db.Signatures
-                                          where row.CauseID == Model.CauseID
-                                          select row).Count();
-                    <p class="text-muted">This cause has...</p>
-                    <h1 class="display-4"><strong><span class="signatureCount">@SignatureCount</span> </strong><small class="text-muted">signatures</small></h1>
-                    <button type="button" class="btn btn-success btn-lg btn-block" id="signatureButton" data-toggle="modal" data-target="#signatureModal">Sign this cause</button>
 
-                }
-                @*}*@
+            <p class="text-muted">This cause has...</p>
+            <h1 class="display-4"><strong><span class="signatureCount">@Html.Partial("_SignatureCount", new ViewDataDictionary { { "CauseID", Model.CauseID } })</span> </strong><small class="text-muted">signatures</small></h1>
+            <button type="button" class="btn btn-success btn-lg btn-block" id="signatureButton" data-toggle="modal" data-target="#signatureModal">Sign this cause</button>
+
+
+                @*<script type="text/javascript">
+
+    @*$(document).ready(function () {
+        function refreshSignatures () {
+            var CauseID =  @Model.CauseID;
+               $(".SignatureCount").load('@(Url.Action("_SignatureCount","Causes",null, Request.Url.Scheme))?CauseID=' + CauseID);
+        };
+        setInterval(refreshSignatures, 1000);
+    });*@
+                @*</script>*@
                 <br>
                 <h5>Other who have signed..</h5>
                 <table class="table table-sm" id="SignaturesList">
@@ -73,13 +71,13 @@
                     </thead>
                     <tbody>
                         @foreach (var item in Model.Signatures)
-                        {
+            {
 
-                            <tr>
-                                <th scope="row"><span class="oi oi-person"></span> @Html.DisplayFor(modelItem => item.ApplicationUser.FirstName) @Html.DisplayFor(modelItem => item.ApplicationUser.LastName)</th>
-                                <td><small><span class="timeago">@Html.DisplayFor(modelItem => item.DateTimeSigned)</span></small></td>
-                            </tr>
-                        }
+                <tr>
+                    <th scope="row"><span class="oi oi-person"></span> @Html.DisplayFor(modelItem => item.ApplicationUser.FirstName) @Html.DisplayFor(modelItem => item.ApplicationUser.LastName)</th>
+                    <td><small><span class="timeago">@Html.DisplayFor(modelItem => item.DateTimeSigned)</span></small></td>
+                </tr>
+}
 
                     </tbody>
                 </table>

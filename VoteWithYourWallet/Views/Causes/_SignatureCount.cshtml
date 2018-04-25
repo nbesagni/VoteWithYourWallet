@@ -1,0 +1,13 @@
+﻿@using VoteWithYourWallet.Models
+
+@{
+    var CauseID = ViewData["CauseID"]?.ToString() ?? "";
+    var lookupId = int.Parse(CauseID);
+    var db = new ApplicationDbContext();
+
+    int SignatureCount = (from row in db.Signatures
+                          where row.CauseID == lookupId
+                          select row).Count();
+
+}
+@SignatureCount

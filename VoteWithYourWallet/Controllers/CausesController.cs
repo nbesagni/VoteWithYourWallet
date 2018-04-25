@@ -175,6 +175,13 @@ namespace VoteWithYourWallet.Controllers
             return PartialView();
         }
 
+        [HttpGet]
+        public ActionResult _SignatureCount(string CauseID)
+        {
+
+            return PartialView();
+        }
+
 
         static List<Signature> signatures = new List<Signature>();
         public ActionResult GetSignatures()
