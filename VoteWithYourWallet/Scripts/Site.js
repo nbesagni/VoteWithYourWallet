@@ -122,3 +122,21 @@ $(document).ready(function () {
 //});
 
 
+// Make currency symbol appear hovered when table row hovered on Exchange currency list
+$('.TargetOverlay').hover(function () {
+    $(this).css({ 'opacity': '1.0' }),
+    $(this).find('.fa-bullseye').css({ 'color': 'white', 'transform': 'rotate(-20deg)', 'transform-origin': '0.49em 0.7em' });
+}, function () {
+    $(this).find('.fa-bullseye').css({ 'color': '', 'transform': '', 'transform-origin': '' }),
+        $(this).css({ 'opacity': '' });
+    });
+
+// Fix for fuzzy timestamps by TimeAgo by Hackerman, source: https://stackoverflow.com/questions/43457281/datetime-displayed-using-jquery-timeago
+$(document).ready(function () {
+    var dateAux;
+    $(".timeago").each(function (i, item) {
+        dateAux = moment($(item).html(), 'DD-MM-YYYY hh:mm:ss');
+        $(item).attr('datetime', dateAux.toISOString());
+    })
+    $("time.timeago").timeago();
+});

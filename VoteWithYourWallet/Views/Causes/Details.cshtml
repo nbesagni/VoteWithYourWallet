@@ -28,7 +28,7 @@ else
 {
             <img class="img-fluid" src="@Url.Content(Model.Image)">
 }
-            <div class="TargetOverlay" style="color: white;  height: 72px; border-radius: 35px; opacity: 1.0; z-index: 5; position:absolute; right:10px; bottom: 0px; background-color: #d9534f; text-align: right; vertical-align: middle; line-height: 50px;">
+            <div class="TargetOverlay">
                 <i class="fas fa-bullseye display-3"></i>
                 <strong class="display-4">@Html.DisplayFor(model => model.Target)</strong>
             </div>
@@ -39,12 +39,14 @@ else
                     <p class="text-right">
                         <small>Cause created by <strong>@Html.DisplayFor(modelItem => Model.ApplicationUser.FirstName) @Html.DisplayFor(modelItem => Model.ApplicationUser.LastName)</strong></small>
                     </p><br />
-                    <span id="socialMediaButtons">
-                        <!-- Social Media Buttons -->
-                        <button class="btn facebook"><i class="fab fa-facebook fa-lg"></i> Share</button>
-                        <button class="btn twitter"><i class="fab fa-twitter fa-lg"></i> Share</button>
-                        <button class="btn google"><i class="fab fa-google fa-lg"></i> Share</button>
-                    </span>
+                        <span id="socialMediaButtons">
+                            <!-- Social Media Buttons -->
+                            <a href="https://www.facebook.com/sharer/sharer.php?u=@Request.Url.AbsoluteUri" class="social btn facebook"><i class="fab fa-facebook fa-lg"></i> Share</a>
+                            <a href="https://twitter.com/home?status=@Request.Url.AbsoluteUri" class="social btn twitter"><i class="fab fa-twitter fa-lg"></i> Share</a>
+                            <a href="https://plus.google.com/share?url=@Request.Url.AbsoluteUri" class="social btn google"><i class="fab fa-google fa-lg"></i> Share</a>
+                            <a href="https://www.reddit.com/submit?url=@Request.Url.AbsoluteUri" class="btn reddit"><i class="fab fa-reddit fa-lg"></i> Share</a>
+
+                        </span>
                     <hr>
                     <p class="text-right">
 
@@ -103,8 +105,8 @@ else
             {
 
                 <tr>
-                    <th scope="row"><span class="oi oi-person"></span> @Html.DisplayFor(modelItem => item.ApplicationUser.FirstName) @Html.DisplayFor(modelItem => item.ApplicationUser.LastName)</th>
-                    <td><small><span class="timeago">@Html.DisplayFor(modelItem => item.DateTimeSigned)</span></small></td>
+                    <th scope="row"><i class="fas fa-user-circle"></i> @Html.DisplayFor(modelItem => item.ApplicationUser.FirstName) @Html.DisplayFor(modelItem => item.ApplicationUser.LastName)</th>
+                    <td><small><time class="timeago" datetime="@Html.DisplayFor(modelItem => item.DateTimeSigned)">@Html.DisplayFor(modelItem => item.DateTimeSigned)</time></small></td>
                 </tr>
 }
 
@@ -120,7 +122,6 @@ else
 
 
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.CauseID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
 

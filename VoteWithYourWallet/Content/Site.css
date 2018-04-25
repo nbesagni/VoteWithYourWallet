@@ -40,8 +40,28 @@ textarea {
     color: white;
 }
 
+.reddit {
+    background-color: #5f99cf;
+    color: white
+}
+
 
 .card-img-top {
     display: block;
     width: 100%;
+}
+
+.TargetOverlay {
+    color: white;
+    height: 72px;
+    border-radius: 35px;
+    opacity: 0.8;
+    z-index: 5;
+    position: absolute;
+    right: 10px;
+    bottom: 0px;
+    background-color: #d9534f;
+    text-align: right;
+    vertical-align: middle;
+    line-height: 50px;
 }

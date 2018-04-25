@@ -20,7 +20,7 @@
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.CauseID, new { Value = CauseIDtoSign })
     @Html.HiddenFor(model => model.ApplicationUserID, new { Value = User.Identity.GetUserId() })
-    @Html.HiddenFor(model => model.DateTimeSigned, new { Value = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") })
+    @Html.HiddenFor(model => model.DateTimeSigned, new { Value = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssK", System.Globalization.CultureInfo.InvariantCulture) })
 
     <p class="lead">By selecting the 'sign' button, you agree to sign the cause <strong>"@CauseTitle"</strong> and to vote with your wallet by not doing business with or purchasing from <strong>@CauseTarget</strong>.</p>
 
