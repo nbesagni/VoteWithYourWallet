@@ -128,8 +128,17 @@ namespace VoteWithYourWallet.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ApplicationUserID = new SelectList(db.Users, "Id", "FirstName", cause.ApplicationUserID);
-            return View(cause);
+
+            // Check if user has access rights
+            var userID = User.Identity.GetUserId();
+            if (db.Causes.Where(u => u.ApplicationUserID == userID).Any() || User.IsInRole("Admin"))
+            {
+                ViewBag.ApplicationUserID = new SelectList(db.Users, "Id", "FirstName", cause.ApplicationUserID);
+                return View(cause);
+            }
+            
+            return RedirectToAction("Index");
+                
         }
 
         // POST: Causes/Edit/5
@@ -162,7 +171,15 @@ namespace VoteWithYourWallet.Controllers
             {
                 return HttpNotFound();
             }
-            return View(cause);
+            // Check if user has access rights
+            var userID = User.Identity.GetUserId();
+            if (db.Causes.Where(u => u.ApplicationUserID == userID).Any() || User.IsInRole("Admin"))
+            {
+                ViewBag.ApplicationUserID = new SelectList(db.Users, "Id", "FirstName", cause.ApplicationUserID);
+                return View(cause);
+            }
+
+            return RedirectToAction("Index");
         }
 
         // POST: Causes/Delete/5
@@ -210,12 +227,6 @@ namespace VoteWithYourWallet.Controllers
             return View();
         }
 
-        //[HttpPost]
-        //public ActionResult SignCause(Signature s)
-        //{
-        //    signatures.Add(s);
-        //    return Json(signatures.Count, JsonRequestBehavior.AllowGet);
-        //}
 
         protected override void Dispose(bool disposing)
         {

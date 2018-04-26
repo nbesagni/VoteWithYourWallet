@@ -1,0 +1,8 @@
+﻿@model IEnumerable<VoteWithYourWallet.Models.Cause>
+
+@Html.DisplayForModel(Model)
+
+@if (!Model.Any())
+{
+    <p>There are no causes matching your search terms.</p>
+}

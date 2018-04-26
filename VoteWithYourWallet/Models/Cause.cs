@@ -11,11 +11,15 @@ namespace VoteWithYourWallet.Models
         public int CauseID { get; set; }
         [Display(Name = "User ID")]
         public string ApplicationUserID { get; set; }
+        [Required]
         public string Title { get; set; }
+        [Required]
         [Display(Name = "Short Description")]
         public string ShortDescription { get; set; }
+        [Required]
         [Display(Name = "Long Description")]
         public string LongDescription { get; set; }
+        [Required]
         public string Target { get; set; }
         public string Image { get; set; }
 

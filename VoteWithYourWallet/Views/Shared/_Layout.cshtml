@@ -22,14 +22,7 @@
                 <li class="nav-item">@Html.ActionLink("Start a cause", "Create", "Causes", new { area = "" }, new { @class = "nav-link" })</li>
                 <li class="nav-item">@Html.ActionLink("Browse", "Index", "Causes", new { area = "" }, new { @class = "nav-link" })</li>
             </ul>
-            <form class="form-inline mx-auto" role="search">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search causes..." name="searchTerm" id="searchTerm">
-                    <div class="input-group-append">
-                        <button type="submit" class="btn btn-default input-group-append" id="searchNav"><i class="fas fa-search fa-lg"></i></button>
-                    </div>
-                </div>
-            </form>
+            @Html.Partial("_CauseSearchForm", new Cause())
             @Html.Partial("_LoginPartial")
         </div>
         <!-- /.navbar-collapse -->
@@ -88,6 +81,8 @@
     <script src="~/Scripts/Site.js"></script>
     <!-- Moment JS required for TimeAgo patch-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.js"></script>
+
+
     @RenderSection("scripts", required: false)
 </body>
 </html>

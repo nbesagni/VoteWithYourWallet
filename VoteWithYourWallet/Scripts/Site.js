@@ -91,7 +91,8 @@ $(document).ready(function () {
         var validated = false;
         var causeName = $("#causeName").val();
         var causeDescription = $("#causeDescription").val();
-        if (causeName.length !== 0 && causeDescription.length !== 0) {
+        var causeTarget = $("#causeTarget").val();
+        if (causeName.length !== 0 && causeDescription.length !== 0 && causeTarget.length !== 0) {
             validated = true;
         }
         if (validated) {
@@ -140,3 +141,5 @@ $(document).ready(function () {
     })
     $("time.timeago").timeago();
 });
+
+
