@@ -21,6 +21,15 @@ namespace VoteWithYourWallet.Controllers
             return View(signatures.ToList());
         }
 
+        // GET: Signature Count
+        public JsonResult GetSignatureCount(int? id)
+        {
+            //logic here for getting your count
+            var SignatureCount = db.Signatures.Where(c => c.CauseID == id).Count();
+
+        return Json( SignatureCount, JsonRequestBehavior.AllowGet);
+        }
+
         // GET: Signatures/Details/5
         public ActionResult Details(int? id)
         {

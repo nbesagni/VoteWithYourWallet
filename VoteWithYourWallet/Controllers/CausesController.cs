@@ -193,6 +193,39 @@ namespace VoteWithYourWallet.Controllers
             return RedirectToAction("Index");
         }
 
+
+        // GET: Causes/Details/5
+        public ActionResult Signees(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Cause cause = db.Causes.Find(id);
+            if (cause == null)
+            {
+                return HttpNotFound();
+            }
+
+
+            // Check if user has signed cause before
+            var userID = User.Identity.GetUserId();
+            if (db.Signatures.Where(u => u.ApplicationUserID == userID && u.CauseID == id).Any())
+            {
+                ViewBag.AlreadySigned = "True";
+            }
+            else
+            {
+                ViewBag.AlreadySigned = "False";
+            }
+
+
+
+
+            return View(cause);
+        }
+
+
         // GET: Causes/_SignCause
         public ActionResult _SignCause()
         {

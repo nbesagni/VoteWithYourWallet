@@ -59,7 +59,7 @@ textarea {
     color: white;
     height: 72px;
     border-radius: 35px;
-    opacity: 0.8;
+    opacity: 0.95;
     z-index: 5;
     position: absolute;
     right: 10px;
@@ -87,3 +87,6 @@ textarea {
         border-color: #910821;
     }
 
+.text-danger {
+    color: #C3124A;
+}

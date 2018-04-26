@@ -37,12 +37,6 @@
 
 
 
-using (var db = new ApplicationDbContext())
-{
-    int SignatureCount = (from row in db.Signatures
-                          where row.CauseID == item.CauseID
-                          select row).Count();
-
 
 
 
@@ -57,9 +51,9 @@ else
                   <img class="card-img-top img-responsive" src="@Url.Content(item.Image)" alt="@Html.DisplayFor(modelItem => item.Title) image">
 }
                       <div style=" z-index: 5; position:absolute; right:10px; top: 10px; text-align: right; vertical-align: middle; line-height: 25px;">
-                          <button type="button" class="btn btn-info">
-                              Signatures <span class="badge badge-light">@SignatureCount</span>
-                          </button>
+                          <a href="~/Causes/Signees/@item.CauseID"class="btn btn-info">
+                              Signatures <span class="badge badge-light">@Html.Partial("_SignatureCount", new ViewDataDictionary { { "CauseID", item.CauseID } })</span>
+                          </a>
                       </div>
 
                       <div class="card-body">
@@ -97,7 +91,7 @@ else
                           </p>
                       </div>
                   </div>
-            }
+            
 
             if (i % 3 == 0)
             {

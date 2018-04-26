@@ -21,17 +21,21 @@
             <div class="col-md-8">
                 <div class="DetailsImgContainter" style="position:relative;">
                     @if (Model.Image.Length < 1)
-        {
-            <img class="img-fluid" src="images/causePhoto.jpg">
-}
-else
-{
-            <img class="img-fluid" src="@Url.Content(Model.Image)">
-}
-            <div class="TargetOverlay">
-                <i class="fas fa-bullseye display-3"></i>
-                <strong class="display-4">@Html.DisplayFor(model => model.Target)&nbsp;</strong>
-            </div>
+                    {
+                        <img class="img-fluid" src="images/causePhoto.jpg">
+                    }
+                    else
+                    {
+                        <img class="img-fluid" src="@Url.Content(Model.Image)">
+                    }
+                    <div class="TargetOverlay d-none d-sm-block">
+                        <i class="fas fa-bullseye display-3"></i>
+                        <strong class="display-4">@Html.DisplayFor(model => model.Target)&nbsp;</strong>
+                    </div>
+                </div>
+                <div class="text-danger d-sm-none">
+                    <i class="fas fa-bullseye display-5"></i>&nbsp;Veto target:&nbsp;
+                    <strong class="display-5">@Html.DisplayFor(model => model.Target)</strong>
                 </div>
                 <div>
                     <p class="lead">@Html.DisplayFor(model => model.ShortDescription)</p>
@@ -39,28 +43,28 @@ else
                     <p class="text-right">
                         <small>Cause created by <strong>@Html.DisplayFor(modelItem => Model.ApplicationUser.FirstName) @Html.DisplayFor(modelItem => Model.ApplicationUser.LastName)</strong></small>
                     </p><br />
-                        <span id="socialMediaButtons">
-                            <!-- Social Media Buttons -->
-                            <a href="https://www.facebook.com/sharer/sharer.php?u=@Request.Url.AbsoluteUri" class="social btn facebook"><i class="fab fa-facebook fa-lg"></i> Share</a>
-                            <a href="https://twitter.com/home?status=@Request.Url.AbsoluteUri" class="social btn twitter"><i class="fab fa-twitter fa-lg"></i> Share</a>
-                            <a href="https://plus.google.com/share?url=@Request.Url.AbsoluteUri" class="social btn google"><i class="fab fa-google fa-lg"></i> Share</a>
-                            <a href="https://www.reddit.com/submit?url=@Request.Url.AbsoluteUri" class="social btn reddit"><i class="fab fa-reddit fa-lg"></i> Share</a>
+                    <span id="socialMediaButtons">
+                        <!-- Social Media Buttons -->
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=@Request.Url.AbsoluteUri" class="social btn facebook" target="_blank"><i class="fab fa-facebook fa-lg"></i> Share</a>
+                        <a href="https://twitter.com/home?status=@Request.Url.AbsoluteUri" class="social btn twitter" target="_blank"><i class="fab fa-twitter fa-lg"></i> Share</a>
+                        <a href="https://plus.google.com/share?url=@Request.Url.AbsoluteUri" class="social btn google" target="_blank"><i class="fab fa-google fa-lg"></i> Share</a>
+                        <a href="https://www.reddit.com/submit?url=@Request.Url.AbsoluteUri" class="social btn reddit" target="_blank"><i class="fab fa-reddit fa-lg"></i> Share</a>
 
-                        </span>
+                    </span>
                     <hr>
                     <p class="text-right">
 
                         <!-- Check if admin or creator -->
                         @if (User.IsInRole("Admin") || Model.ApplicationUserID == User.Identity.GetUserId())
-        {
-                <a href="@Url.Action("Edit", new { id = Model.CauseID })" class="btn btn-info">
-                    <i class="fas fa-edit"></i> Edit
-                </a>
-                <a href="@Url.Action("Delete", new { id = Model.CauseID })" class="btn btn-danger">
-                    <i class="fas fa-trash-alt"></i> Delete
-                </a>
+                        {
+                            <a href="@Url.Action("Edit", new { id = Model.CauseID })" class="btn btn-info">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                            <a href="@Url.Action("Delete", new { id = Model.CauseID })" class="btn btn-danger">
+                                <i class="fas fa-trash-alt"></i> Delete
+                            </a>
 
-}
+                        }
                     </p>
                 </div>
             </div>
@@ -68,6 +72,19 @@ else
 
                 <p class="text-muted">This cause has...</p>
                 <h1 class="display-4"><strong><span class="signatureCount">@Html.Partial("_SignatureCount", new ViewDataDictionary { { "CauseID", Model.CauseID } })</span> </strong><small class="text-muted">signatures</small></h1>
+                <script>
+                    $(document).ready(function refreshText() {
+                        $.ajax({
+                            url: "/Signatures/GetSignatureCount/@Model.CauseID", success: function (result) {
+                                result = JSON.parse(result);
+                                $(".signatureCount").text(result);
+                            }
+                        });
+                        setTimeout(refreshText, 1000);
+
+                    });
+
+                </script>
                 @if (ViewBag.AlreadySigned == "True")
     {
             <button type="button" class="btn btn-danger btn-lg btn-block" id="signatureButton" disabled>Cause signed</button>
@@ -77,16 +94,7 @@ else
             <button type="button" class="btn btn-info btn-lg btn-block" id="signatureButton" data-toggle="modal" data-target="#signatureModal">Sign this cause</button>
 }
 
-                @*<script type="text/javascript">
 
-        @*$(document).ready(function () {
-            function refreshSignatures () {
-                var CauseID =  @Model.CauseID;
-                   $(".SignatureCount").load('@(Url.Action("_SignatureCount","Causes",null, Request.Url.Scheme))?CauseID=' + CauseID);
-            };
-            setInterval(refreshSignatures, 1000);
-        });*@
-                @*</script>*@
                 <br>
                 <h5>Other who have signed..</h5>
                 <table class="table table-sm" id="SignaturesList">
@@ -101,23 +109,22 @@ else
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model.Signatures)
+                        @foreach (var item in Model.Signatures.OrderByDescending(s => s.DateTimeSigned).Take(5))
             {
 
                 <tr>
                     <th scope="row"><i class="fas fa-user-circle"></i> @Html.DisplayFor(modelItem => item.ApplicationUser.FirstName) @Html.DisplayFor(modelItem => item.ApplicationUser.LastName)</th>
-                    <td><small><time class="timeago" datetime="@Html.DisplayFor(modelItem => item.DateTimeSigned)">@Html.DisplayFor(modelItem => item.DateTimeSigned)</time></small></td>
+                    <td><small><time class="timeago" datetime="@item.DateTimeSigned.ToString("yyyy-MM-ddTHH:mm:ssK", System.Globalization.CultureInfo.InvariantCulture)">@Html.DisplayFor(modelItem => item.DateTimeSigned)</time></small></td>
                 </tr>
 }
 
                     </tbody>
                 </table>
+                @Html.ActionLink("View all", "Signees", new { id = Model.CauseID })
             </div>
         </div>
     </div>
 </div>
-
-
 
 
 
@@ -139,17 +146,19 @@ else
             <div class="modal-body">
                 @if (Request.IsAuthenticated)
                 {
-            @Html.Partial("_SignCause", new ViewDataDictionary { { "CauseID", Model.CauseID } })
+                    @Html.Partial("_SignCause", new ViewDataDictionary { { "CauseID", Model.CauseID } })
                 }
                 else
                 {
-                    <p>You must be logged in to sign up to a cause.
-                <br />
-                Please <a href="#" data-dismiss="modal"  data-toggle="modal" data-target="#loginModal" data-whatever="signIn" aria-controls="signIn">sign in</a> or 
-                <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#loginModal" data-whatever="signUp" aria-controls="signUp">register</a> an account with us.</p>
+                    <p>
+                        You must be logged in to sign up to a cause.
+                        <br />
+                        Please <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#loginModal" data-whatever="signIn" aria-controls="signIn">sign in</a> or
+                        <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#loginModal" data-whatever="signUp" aria-controls="signUp">register</a> an account with us.
+                    </p>
                 }
             </div>
-            
+
         </div>
     </div>
 </div>

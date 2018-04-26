@@ -388,6 +388,12 @@
     <Content Include="Content\DataTables\images\sort_desc.png" />
     <Content Include="Content\DataTables\images\sort_desc_disabled.png" />
     <Content Include="Content\DataTables\swf\flashExport.swf" />
+    <Content Include="Content\Images\Logo3 v2presentation %281%29.jpg" />
+    <Content Include="Content\Images\Logo3 v2presentation.jpg" />
+    <Content Include="Content\Images\LogoSmall.jpg" />
+    <Content Include="Content\Images\qVBFf726.jpg" />
+    <Content Include="Content\Images\smallcausePhoto.jpg" />
+    <Content Include="Content\Images\VoteToVeto.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -586,6 +592,7 @@
     <Content Include="Views\Causes\_SignatureCount.cshtml" />
     <Content Include="Views\Shared\_CauseSearchForm.cshtml" />
     <Content Include="Views\Causes\View.cshtml" />
+    <Content Include="Views\Causes\Signees.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
