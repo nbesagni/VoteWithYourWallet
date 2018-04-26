@@ -1,16 +1,12 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Admin Panel";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-@if (ViewBag.displayMenu == "Yes")
-{
-    <h1>Welcome Admin.</h1>
-    <h3>
-        <li>@Html.ActionLink("Manage Role", "Index", "Role")</li>
-    </h3>
-}
-else
-{
-    <h2>  Welcome <strong>@ViewBag.Name</strong> You do not have access to this page. </h2>
-}  
+
+    <h1>Admin Panel</h1>
+
+        <ul>
+            <li>@Html.ActionLink("Manage Roles", "Index", "Roles")</li>
+        </ul>

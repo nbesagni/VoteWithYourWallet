@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using VoteWithYourWallet.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-// Code for Roles controller and associated viewsmodified from code by Shayo Narayan, Source: http://www.dotnetfunda.com/articles/show/2898/working-with-roles-in-aspnet-identity-for-mvc
+// Code for Roles controller and associated views modified from code by Shayo Narayan, Source: http://www.dotnetfunda.com/articles/show/2898/working-with-roles-in-aspnet-identity-for-mvc
 namespace VoteWithYourWallet.Controllers
 {
     public class RolesController : Controller
@@ -14,7 +14,7 @@ namespace VoteWithYourWallet.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Roles
-        //[Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             var roles = db.Roles.ToList();
@@ -22,7 +22,7 @@ namespace VoteWithYourWallet.Controllers
         }
 
         // GET: /Roles/Create
-        //[Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
@@ -59,7 +59,7 @@ namespace VoteWithYourWallet.Controllers
 
         //
         // GET: /Roles/Edit/5
-        //[Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(string roleName)
         {
             var thisRole = db.Roles.Where(r => r.Name.Equals(roleName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
