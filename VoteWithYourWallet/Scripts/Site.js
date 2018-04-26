@@ -69,22 +69,22 @@ $(document).ready(function () {
     });
 });
 // Disable log in button until all fields entered and validations met
-$(document).ready(function () {
-    $("#loginButton").attr("disabled", "disabled");
-    $("#signIn-password, #signIn-email").keyup(function () {
-        var validated = false;
-        var password = $("#signIn-password").val();
-        var email = $("#signIn-email").val();
-        if (password.length !== 0 && email.length !== 0) {
-            validated = true;
-        }
-        if (validated) {
-            $("#loginButton").removeAttr("disabled");
-        }
-    });
-});
+//$(document).ready(function () {
+//    $("#loginButton").attr("disabled", "disabled");
+//    $("#signIn-password, #signIn-email").keyup(function () {
+//        var validated = false;
+//        var password = $("#signIn-password").val();
+//        var email = $("#signIn-email").val();
+//        if (password.length !== 0 && email.length !== 0) {
+//            validated = true;
+//        }
+//        if (validated) {
+//            $("#loginButton").removeAttr("disabled");
+//        }
+//    });
+//});
 
-// Disable log in button until all fields entered and validations met
+// Disable cause create button until all fields entered and validations met
 $(document).ready(function () {
     $("#causeCreateButton").attr("disabled", "disabled");
     $("#causeName, #causeDescription").keyup(function () {

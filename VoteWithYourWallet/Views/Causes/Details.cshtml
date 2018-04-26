@@ -30,7 +30,7 @@ else
 }
             <div class="TargetOverlay">
                 <i class="fas fa-bullseye display-3"></i>
-                <strong class="display-4">@Html.DisplayFor(model => model.Target)</strong>
+                <strong class="display-4">@Html.DisplayFor(model => model.Target)&nbsp;</strong>
             </div>
                 </div>
                 <div>
@@ -44,7 +44,7 @@ else
                             <a href="https://www.facebook.com/sharer/sharer.php?u=@Request.Url.AbsoluteUri" class="social btn facebook"><i class="fab fa-facebook fa-lg"></i> Share</a>
                             <a href="https://twitter.com/home?status=@Request.Url.AbsoluteUri" class="social btn twitter"><i class="fab fa-twitter fa-lg"></i> Share</a>
                             <a href="https://plus.google.com/share?url=@Request.Url.AbsoluteUri" class="social btn google"><i class="fab fa-google fa-lg"></i> Share</a>
-                            <a href="https://www.reddit.com/submit?url=@Request.Url.AbsoluteUri" class="btn reddit"><i class="fab fa-reddit fa-lg"></i> Share</a>
+                            <a href="https://www.reddit.com/submit?url=@Request.Url.AbsoluteUri" class="social btn reddit"><i class="fab fa-reddit fa-lg"></i> Share</a>
 
                         </span>
                     <hr>
@@ -74,7 +74,7 @@ else
 }
 else
 {
-            <button type="button" class="btn btn-success btn-lg btn-block" id="signatureButton" data-toggle="modal" data-target="#signatureModal">Sign this cause</button>
+            <button type="button" class="btn btn-info btn-lg btn-block" id="signatureButton" data-toggle="modal" data-target="#signatureModal">Sign this cause</button>
 }
 
                 @*<script type="text/javascript">

@@ -45,6 +45,10 @@ textarea {
     color: white
 }
 
+.social:hover {
+    color: lightblue;
+}
+
 
 .card-img-top {
     display: block;
@@ -60,8 +64,26 @@ textarea {
     position: absolute;
     right: 10px;
     bottom: 0px;
-    background-color: #d9534f;
+    background-color: #C3124A;
     text-align: right;
     vertical-align: middle;
     line-height: 50px;
 }
+
+.logo-bg {
+    background-color: #837EA6;
+    color: white;
+}
+
+/*Change bootstrap red button stop match logo*/
+
+.btn-danger {
+    background-color: #C3124A;
+    border-color: #910821;
+}
+
+.btn-danger:hover {
+        background-color: #910821;
+        border-color: #910821;
+    }
+
