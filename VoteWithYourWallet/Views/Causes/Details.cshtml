@@ -73,6 +73,7 @@
                 <p class="text-muted">This cause has...</p>
                 <h1 class="display-4"><strong><span class="signatureCount">@Html.Partial("_SignatureCount", new ViewDataDictionary { { "CauseID", Model.CauseID } })</span> </strong><small class="text-muted">signatures</small></h1>
                 <script>
+                    // script for updating signature count
                     $(document).ready(function refreshText() {
                         $.ajax({
                             url: "/Signatures/GetSignatureCount/@Model.CauseID", success: function (result) {
@@ -96,7 +97,7 @@ else
 
 
                 <br>
-                <h5>Other who have signed..</h5>
+                <h5>Others who have signed..</h5>
                 <table class="table table-sm" id="SignaturesList">
                     <thead class="thead-dark">
                         <tr>
@@ -108,16 +109,8 @@ else
                             </th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @foreach (var item in Model.Signatures.OrderByDescending(s => s.DateTimeSigned).Take(5))
-            {
-
-                <tr>
-                    <th scope="row"><i class="fas fa-user-circle"></i> @Html.DisplayFor(modelItem => item.ApplicationUser.FirstName) @Html.DisplayFor(modelItem => item.ApplicationUser.LastName)</th>
-                    <td><small><time class="timeago" datetime="@item.DateTimeSigned.ToString("yyyy-MM-ddTHH:mm:ssK", System.Globalization.CultureInfo.InvariantCulture)">@Html.DisplayFor(modelItem => item.DateTimeSigned)</time></small></td>
-                </tr>
-}
-
+                    <tbody id="LatestSignatures">
+                        @Html.Partial("_SignatureSmallList", Model)
                     </tbody>
                 </table>
                 @Html.ActionLink("View all", "Signees", new { id = Model.CauseID })
@@ -125,7 +118,20 @@ else
         </div>
     </div>
 </div>
+@*<script>
+    $(document).ready(function refreshText() {
+                        $.ajax({
+                            url: "/Causes/_SignatureSmallList/@Model.CauseID", success: function (result) {
+                                //result = JSON.parse(result);
+                                //$("#LatestSignatures").text(result);
 
+                            }
+                        });
+                        setTimeout(refreshText, 1000);
+
+                    });
+
+</script>*@
 
 
 <p>

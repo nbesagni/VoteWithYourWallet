@@ -51,10 +51,22 @@ else
                   <img class="card-img-top img-responsive" src="@Url.Content(item.Image)" alt="@Html.DisplayFor(modelItem => item.Title) image">
 }
                       <div style=" z-index: 5; position:absolute; right:10px; top: 10px; text-align: right; vertical-align: middle; line-height: 25px;">
-                          <a href="~/Causes/Signees/@item.CauseID"class="btn btn-info">
-                              Signatures <span class="badge badge-light">@Html.Partial("_SignatureCount", new ViewDataDictionary { { "CauseID", item.CauseID } })</span>
+                          <a href="~/Causes/Signees/@item.CauseID" class="btn btn-info">
+                              Signatures <span class="badge badge-light" id="SignatureCount_@item.CauseID">@Html.Partial("_SignatureCount", new ViewDataDictionary { { "CauseID", item.CauseID } })</span>
                           </a>
                       </div>
+                      <script>
+                    $(document).ready(function refreshText() {
+                        $.ajax({
+                            url: "/Signatures/GetSignatureCount/@item.CauseID", success: function (result) {
+                                result = JSON.parse(result);
+                                $("#SignatureCount_@item.CauseID").text(result);
+                            }
+                        });
+                        setTimeout(refreshText, 1000);
+
+                    });
+                      </script>
 
                       <div class="card-body">
                           <h5 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h5>

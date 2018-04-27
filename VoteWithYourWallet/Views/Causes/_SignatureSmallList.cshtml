@@ -1,0 +1,10 @@
+﻿@model VoteWithYourWallet.Models.Cause
+
+@foreach (var item in Model.Signatures.OrderByDescending(s => s.DateTimeSigned).Take(5))
+{
+
+    <tr>
+        <th scope="row"><i class="fas fa-user-circle"></i> @Html.DisplayFor(modelItem => item.ApplicationUser.FirstName) @Html.DisplayFor(modelItem => item.ApplicationUser.LastName)</th>
+        <td><small><time class="timeago" datetime="@item.DateTimeSigned">@Html.DisplayFor(modelItem => item.DateTimeSigned)</time></small></td>
+    </tr>
+}

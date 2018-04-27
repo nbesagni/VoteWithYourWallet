@@ -9,7 +9,7 @@
 </div>
 <hr>
 <div class="row">
-    <div class="col-md-10 mx-auto">
+    <div class="col-md-9 mx-auto">
         <div class="row">
             <table class="table">
                 <thead class="thead-dark">
@@ -28,11 +28,11 @@
                 <tbody>
                     @foreach (var item in Model.Signatures.OrderByDescending(s => s.DateTimeSigned))
                     {
-                    <tr>
-                        <th scope="row"><i class="fas fa-user-circle"></i> @Html.DisplayFor(modelItem => item.ApplicationUser.FirstName) @Html.DisplayFor(modelItem => item.ApplicationUser.LastName)</th>
-                        <td>@Html.DisplayFor(modelItem => item.Message)</td>
-                        <td><small><time class="timeago" datetime="@Html.DisplayFor(modelItem => item.DateTimeSigned)">@Html.DisplayFor(modelItem => item.DateTimeSigned)</time></small></td>
-                    </tr>
+                        <tr>
+                            <th scope="row"><i class="fas fa-user-circle"></i> @Html.DisplayFor(modelItem => item.ApplicationUser.FirstName) @Html.DisplayFor(modelItem => item.ApplicationUser.LastName)</th>
+                            <td>@Html.DisplayFor(modelItem => item.Message)</td>
+                            <td><small><time class="timeago" datetime="@Html.DisplayFor(modelItem => item.DateTimeSigned)">@Html.DisplayFor(modelItem => item.DateTimeSigned)</time></small></td>
+                        </tr>
 
                     }
 
@@ -42,12 +42,55 @@
 
 
 
-            </div>
         </div>
     </div>
+    <div class="col-md-2">
+        @if (ViewBag.AlreadySigned == "True")
+        {
+            <button type="button" class="btn btn-danger btn-lg btn-block" id="signatureButton" disabled>Cause signed</button>
+        }
+        else
+        {
+            <button type="button" class="btn btn-info btn-lg btn-block" id="signatureButton" data-toggle="modal" data-target="#signatureModal">Sign this cause</button>
+        }
+    </div>
+</div>
 
+<!-- Signature Modal-->
+<div class="modal fade" id="signatureModal" role="dialog" aria-labelledby="signatureModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="signatureModalLabel">Sign a Cause</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @if (Request.IsAuthenticated)
+                {
+                    @Html.Partial("_SignCause", new ViewDataDictionary { { "CauseID", Model.CauseID } })
+                }
+                else
+                {
+                    <p>
+                        You must be logged in to sign up to a cause.
+                        <br />
+                        Please <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#loginModal" data-whatever="signIn" aria-controls="signIn">sign in</a> or
+                        <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#loginModal" data-whatever="signUp" aria-controls="signUp">register</a> an account with us.
+                    </p>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- /. Signature Modal -->
 
 <p>
 
     @Html.ActionLink("Back to List", "Index") |
     @Html.ActionLink("Back to Cause", "Details", new { id = Model.CauseID })
+
+
+

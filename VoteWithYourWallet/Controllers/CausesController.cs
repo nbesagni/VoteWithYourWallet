@@ -208,6 +208,7 @@ namespace VoteWithYourWallet.Controllers
             }
 
 
+
             // Check if user has signed cause before
             var userID = User.Identity.GetUserId();
             if (db.Signatures.Where(u => u.ApplicationUserID == userID && u.CauseID == id).Any())
@@ -224,6 +225,22 @@ namespace VoteWithYourWallet.Controllers
 
             return View(cause);
         }
+
+
+        // GET: Causes/_SignatureSmallList
+        public ActionResult _SignatureSmallList()
+        {
+            return PartialView();
+        }
+
+        //// GET: Causes/_SignatureSmallListJson
+        //public JsonResult _SignatureSmallListJson(int? id)
+        //{
+        //    var SignatureList = db.Signatures.Where(c => c.CauseID == id).OrderByDescending(s => s.DateTimeSigned).Take(5);
+
+
+        //    return Json(SignatureList, JsonRequestBehavior.AllowGet);
+        //}
 
 
         // GET: Causes/_SignCause
