@@ -73,12 +73,13 @@ namespace VoteWithYourWallet.Controllers
             if (ModelState.IsValid)
             {
                 string path;
+                string dbPath;
                 if (file != null) {
                     //Generate random string code by User Mora, Source: https://stackoverflow.com/questions/17874086/generate-random-alphanumeric-string-into-password-field
                     var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
                     var stringChars = new char[8];
                     var random = new Random();
-
+                    
                     for (int i = 0; i < stringChars.Length; i++)
                     {
                         stringChars[i] = chars[random.Next(chars.Length)];
@@ -87,14 +88,16 @@ namespace VoteWithYourWallet.Controllers
                     var finalString = new String(stringChars);
                     // Image upload amend code by Ankur Mistry https://www.c-sharpcorner.com/article/upload-files-in-Asp-Net-mvc/
                     path = Path.Combine(Server.MapPath("~/Content/Images"), finalString + Path.GetExtension(file.FileName));
-
+                    dbPath = "~/Content/Images/" + finalString + Path.GetExtension(file.FileName);
                     file.SaveAs(path);
+                    
                 }
                 else
                 {
-                    path = "~/Content/Images/causePhoto.jpg";
+                    dbPath = "~/Content/Images/causePhoto.jpg";
 
                 }
+                
                 db.Causes.Add(new Cause
                 {
 
@@ -104,7 +107,7 @@ namespace VoteWithYourWallet.Controllers
                     ShortDescription = cause.ShortDescription,
                     LongDescription = cause.LongDescription,
                     Target = cause.Target,
-                    Image = path
+                    Image = dbPath
                 });
                 //db.Causes.Add(cause);
                 db.SaveChanges();
